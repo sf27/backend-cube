@@ -22,7 +22,8 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "1.14.0"
+    "webpack-dev-server": "1.14.0",
+    "axios": "0.15.3"
   },
   "devDependencies": {
     "babel-loader": "^6.2.5",
@@ -37,8 +38,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/webpack-dev-server --hot --progress --inline --watch",
-    "update-schema": "node ./scripts/create_schema.js"
+    "start": "./node_modules/.bin/webpack-dev-server --hot --progress --inline --watch"
   },
   "author": "",
   "license": "ISC"

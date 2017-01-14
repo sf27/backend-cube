@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from app_rappi import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^execute/command/$', views.ExecuteCommandView.as_view(), name='execute_command'),
 ]

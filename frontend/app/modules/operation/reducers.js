@@ -1,5 +1,5 @@
 import {EXECUTE_COMMAND_REQUEST, EXECUTE_COMMAND_SUCCESS, EXECUTE_COMMAND_FAILURE} from "./actions";
-
+import axios from "axios";
 export const postExecuteCommandRequest = () => ({type: EXECUTE_COMMAND_REQUEST});
 export const postExecuteCommandSuccess = (data) => ({type: EXECUTE_COMMAND_SUCCESS, data});
 export const postExecuteCommandFailure = (error) => ({type: EXECUTE_COMMAND_FAILURE, error});
@@ -8,8 +8,15 @@ export const postExecuteCommandFailure = (error) => ({type: EXECUTE_COMMAND_FAIL
 export function postExecuteCommand(command) {
     return dispatch => {
         dispatch(postExecuteCommandRequest());
-        dispatch(postExecuteCommandSuccess());
-        // todo: add post request
+        axios.post('http://localhost:8000/execute/command/', {
+            command: command
+        }).then(response => {
+            console.log(response);
+            dispatch(postExecuteCommandSuccess(response));
+        }).catch(error => {
+            console.log(error);
+            dispatch(postExecuteCommandFailure(error));
+        });
     }
 }
 

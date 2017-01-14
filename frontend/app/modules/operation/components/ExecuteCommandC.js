@@ -1,12 +1,14 @@
 import React, {Component, PropTypes} from "react";
+import {connect} from "react-redux";
 import CommandListC from "./CommandListC";
+import {postExecuteCommand} from "../reducers";
 
 class ExecuteCommandC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            message: "",
-            commands: JSON.parse(localStorage.getItem('commands'))
+            command: "",
+            commands: JSON.parse(localStorage.getItem('commands')) || []
         };
     }
 
@@ -21,22 +23,23 @@ class ExecuteCommandC extends Component {
     };
 
     onClearHistory = () => {
-        this.setState({message: "", commands: []});
+        this.setState({command: "", commands: []});
         localStorage.setItem('commands', JSON.stringify([]));
     };
 
     handleSave = () => {
-        let message = this.state.message;
-        if (message) {
+        let command = this.state.command;
+        if (command) {
             let commands = this.state.commands;
-            commands.push(message);
+            commands.push(command);
             localStorage.setItem('commands', JSON.stringify(commands));
-            this.setState({message: "", commands: commands});
+            this.setState({command: "", commands: commands});
+            this.props.onPostExecuteCommand(command)
         }
     };
 
     handleChange = (event) => {
-        this.setState({message: event.target.value});
+        this.setState({command: event.target.value});
     };
 
     render() {
@@ -53,7 +56,7 @@ class ExecuteCommandC extends Component {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={this.state.message}
+                                value={this.state.command}
                                 onChange={this.handleChange}
                                 onKeyPress={this.handleKeyPress}
                             />
@@ -72,4 +75,25 @@ class ExecuteCommandC extends Component {
     }
 }
 
-export default ExecuteCommandC;
+const mapStateToProps = state => (
+{
+    executeCommand: state.executeCommand
+}
+);
+
+const mapDispatchToProps = dispatch => (
+{
+    onPostExecuteCommand: (command) => {
+        dispatch(postExecuteCommand(command));
+    }
+}
+);
+
+ExecuteCommandC.propTypes = {
+    onPostExecuteCommand: React.PropTypes.func.isRequired,
+    executeCommand: React.PropTypes.object.isRequired,
+};
+
+const ExecuteCommand = connect(mapStateToProps, mapDispatchToProps)(ExecuteCommandC);
+
+export default ExecuteCommand;

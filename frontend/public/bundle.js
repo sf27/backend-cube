@@ -868,7 +868,7 @@
 	    message += '&args[]=' + encodeURIComponent(arguments[argIdx + 1]);
 	  }
 	
-	  message += ' for the full message or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
+	  message += ' for the full command or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
 	
 	  var error = new Error(message);
 	  error.name = 'Invariant Violation';
@@ -902,21 +902,21 @@
 	 * to provide information about what broke and what you were
 	 * expecting.
 	 *
-	 * The invariant message will be stripped in production, but the invariant
+	 * The invariant command will be stripped in production, but the invariant
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
 	function invariant(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
+	      throw new Error('invariant requires an error command argument');
 	    }
 	  }
 	
 	  if (!condition) {
 	    var error;
 	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error command and additional helpful warnings.');
 	    } else {
 	      var args = [a, b, c, d, e, f];
 	      var argIndex = 0;
@@ -1375,7 +1375,7 @@
 	
 	    warning = function warning(condition, format) {
 	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'command argument');
 	      }
 	
 	      if (format.indexOf('Failed Composite propType: ') === 0) {
@@ -3297,7 +3297,7 @@
 	    // Skip key warning if the type isn't valid since our key validation logic
 	    // doesn't expect a non-string/function type and can throw confusing errors.
 	    // We don't want exception behavior to differ between dev and prod.
-	    // (Rendering will throw with a helpful message and as soon as the type is
+	    // (Rendering will throw with a helpful command and as soon as the type is
 	    // fixed, the key warnings will appear.)
 	    if (validType) {
 	      for (var i = 2; i < arguments.length; i++) {
@@ -3754,7 +3754,7 @@
 	      // After these have been cleaned up, we'll let them throw.
 	      try {
 	        // This is intentionally an invariant that gets caught. It's the same
-	        // behavior as without this statement except with a better message.
+	        // behavior as without this statement except with a better command.
 	        !(typeof typeSpecs[typeSpecName] === 'function') ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s: %s type `%s` is invalid; it must be a function, usually from React.PropTypes.', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : _prodInvariant('84', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : void 0;
 	        error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
 	      } catch (ex) {
@@ -3975,7 +3975,7 @@
 	    if (propType !== expectedType) {
 	      var locationName = ReactPropTypeLocationNames[location];
 	      // `propValue` being instance of, say, date/regexp, pass the 'object'
-	      // check, but we can offer a more precise error message here rather than
+	      // check, but we can offer a more precise error command here rather than
 	      // 'of type `object`'.
 	      var preciseType = getPreciseType(propValue);
 	
@@ -15445,7 +15445,7 @@
 	      this._renderedComponent.unmountComponent(true);
 	      transaction.rollback(checkpoint);
 	
-	      // Try again - we've informed the component about the error, so they can render an error message this time.
+	      // Try again - we've informed the component about the error, so they can render an error command this time.
 	      // If this throws again, the error will bubble up (and can be caught by a higher error boundary).
 	      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
 	    }
@@ -21632,7 +21632,7 @@
 	/**
 	 * Prints a warning in the console if it exists.
 	 *
-	 * @param {String} message The warning message.
+	 * @param {String} message The warning command.
 	 * @returns {void}
 	 */
 	function warning(message) {
@@ -22779,7 +22779,7 @@
 	/**
 	 * Prints a warning in the console if it exists.
 	 *
-	 * @param {String} message The warning message.
+	 * @param {String} message The warning command.
 	 * @returns {void}
 	 */
 	function warning(message) {
@@ -23038,14 +23038,14 @@
 	 * to provide information about what broke and what you were
 	 * expecting.
 	 *
-	 * The invariant message will be stripped in production, but the invariant
+	 * The invariant command will be stripped in production, but the invariant
 	 * will remain to ensure logic does not differ in production.
 	 */
 	
 	var invariant = function(condition, format, a, b, c, d, e, f) {
 	  if (process.env.NODE_ENV !== 'production') {
 	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
+	      throw new Error('invariant requires an error command argument');
 	    }
 	  }
 	
@@ -23054,7 +23054,7 @@
 	    if (format === undefined) {
 	      error = new Error(
 	        'Minified exception occurred; use the non-minified dev environment ' +
-	        'for the full error message and additional helpful warnings.'
+	        'for the full error command and additional helpful warnings.'
 	      );
 	    } else {
 	      var args = [a, b, c, d, e, f];
@@ -24008,7 +24008,7 @@
 	// MessageChannels are desirable because they give direct access to the HTML
 	// task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
 	// 11-12, and in web workers in many engines.
-	// Although message channels yield to any queued rendering and IO tasks, they
+	// Although command channels yield to any queued rendering and IO tasks, they
 	// would be better than imposing the 4ms delay of timers.
 	// However, they do not work reliably in Internet Explorer or Safari.
 	
@@ -24056,11 +24056,11 @@
 	    };
 	}
 	
-	// The message channel technique was discovered by Malte Ubl and was the
+	// The command channel technique was discovered by Malte Ubl and was the
 	// original foundation for this library.
 	// http://www.nonblocking.io/2011/06/windownexttick.html
 	
-	// Safari 6.0.5 (at least) intermittently fails to create message ports on a
+	// Safari 6.0.5 (at least) intermittently fails to create command ports on a
 	// page's first load. Thankfully, this version of Safari supports
 	// MutationObservers, so we don't need to fall back in that case.
 	
@@ -35281,7 +35281,7 @@
 	          });
 	        })();
 	      } catch (error) {
-	        __webpack_require__(8)(false, 'RelayOptimisticMutationUtils: Malformed or unsupported data key, ' + '`%s`. Only booleans, strings, and numbers are currently supported, ' + 'and commas are required. Parse failure reason was `%s`.', key, error.message);
+	        __webpack_require__(8)(false, 'RelayOptimisticMutationUtils: Malformed or unsupported data key, ' + '`%s`. Only booleans, strings, and numbers are currently supported, ' + 'and commas are required. Parse failure reason was `%s`.', key, error.command);
 	      }
 	    }
 	  }
@@ -35768,7 +35768,7 @@
 	    var queryID = this.getQuery().getID();
 	    delete this._pendingFetchMap[queryID];
 	
-	    console.warn(error.message);
+	    console.warn(error.command);
 	
 	    this._error = error;
 	    this._updateResolvedDeferred();
@@ -43550,7 +43550,7 @@
 	  var queryLines = request.getQueryString().split('\n');
 	  return errors.map(function (_ref, ii) {
 	    var locations = _ref.locations;
-	    var message = _ref.message;
+	    var message = _ref.command;
 	
 	    var prefix = ii + 1 + '. ';
 	    var indent = ' '.repeat(prefix.length);
@@ -44668,7 +44668,7 @@
 	/* eslint-disable no-unused-vars */
 	var DEPRECATED = (0, _freeze2['default'])({
 	  assert: __webpack_require__(11),
-	  message: 'has deprecated property',
+	  command: 'has deprecated property',
 	  type: 'DEPRECATED'
 	});
 	/* eslint-enable no-unused-vars */
@@ -44677,13 +44677,13 @@
 	  // These first two properties are not needed, but including them is easier
 	  // than getting Flow to accept a disjoint union.
 	  assert: function assert() {},
-	  message: '',
+	  command: '',
 	  type: 'OPTIONAL'
 	});
 	
 	var REQUIRED = {
 	  assert: __webpack_require__(8),
-	  message: 'must have property',
+	  command: 'must have property',
 	  type: 'REQUIRED'
 	};
 	
@@ -44717,7 +44717,7 @@
 	      var isDeprecated = validator.type === 'DEPRECATED';
 	      var present = config.hasOwnProperty(property);
 	      if (isRequired && !present || isDeprecated && present) {
-	        validator.assert(false, 'validateMutationConfig: `%s` config on `%s` %s `%s`.', config.type, name, validator.message, property);
+	        validator.assert(false, 'validateMutationConfig: `%s` config on `%s` %s `%s`.', config.type, name, validator.command, property);
 	      }
 	    });
 	  }
@@ -45990,7 +45990,7 @@
 	 *        return <FooComponent {...data} />;
 	 *      }}
 	 *      renderFailure={function(error) {
-	 *        return <View>Error: {error.message}</View>;
+	 *        return <View>Error: {error.command}</View>;
 	 *      }}
 	 *    />,
 	 *    ...
@@ -47655,7 +47655,7 @@
 	        nextState = nextEntry.prevState;
 	        took = nextEntry.started - started;
 	      }
-	      // message
+	      // command
 	      var formattedAction = actionTransformer(action);
 	      var isCollapsed = typeof collapsed === "function" ? collapsed(function () {
 	        return nextState;
