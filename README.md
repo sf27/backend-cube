@@ -7,7 +7,7 @@ Project used to test backend skills.
 1. Clone the repo:  
    `git clone https://eliosf27@bitbucket.org/eliosf27/backendrappi.git`
 2. Build the docker image:  
-   `cd CRUD-With-GraphQL/ && docker-compose build`    
+   `cd backendrappi/ && docker-compose build`
 3. Install the dependencies:  
    `docker-compose run --rm node npm install`  
 4. Starts the containers in the background and leaves them running.:  
