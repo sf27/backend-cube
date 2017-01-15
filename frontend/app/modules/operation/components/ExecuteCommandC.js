@@ -72,7 +72,12 @@ class ExecuteCommandC extends Component {
                 </div>
                 <div className="row">
                     <div className="col-xs-12">
-                        Ejecución de Script via WEB
+                        <p>
+                            Script execution via web
+                            <a href="https://www.hackerrank.com/challenges/cube-summation" target="_blank">
+                                <h2>Cube Summation</h2>
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <div className="row">
