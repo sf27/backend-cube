@@ -33,10 +33,6 @@ class ExecuteCommandC extends Component {
     handleSave = () => {
         let command = this.state.command;
         if (command) {
-            let commands = this.state.commands;
-            commands.push(command);
-            localStorage.setItem('commands', JSON.stringify(commands));
-            this.setState({command: "", commands});
             this.props.onPostExecuteCommand(command)
         }
     };
@@ -47,6 +43,11 @@ class ExecuteCommandC extends Component {
 
     componentWillReceiveProps = (props) => {
         if (props.executeCommand.success) {
+            let command = this.state.command;
+            let commands = this.state.commands;
+            commands.push(command);
+            localStorage.setItem('commands', JSON.stringify(commands));
+            this.setState({command: "", commands});
             if (props.executeCommand.data.result) {
                 let results = this.state.results;
                 results.push(props.executeCommand.data.value);

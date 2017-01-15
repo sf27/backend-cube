@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import sys
+
 from django.db.models import Q, Sum
 from rest_framework import status
 from rest_framework.response import Response
@@ -14,16 +17,109 @@ class ExecuteCommandView(APIView):
     def reset_matriz(self):
         Matriz.objects.all().delete()
 
+    def constraints(self, value, min_value=1, max_value=sys.maxsize):
+        try:
+            value = int(value)
+        except Exception:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'Por favor ingrese un valor entero válido.'
+            }
+            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+
+        if value < min_value or value > max_value:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'El valor ingresado no está dentro del rango válido. Rango [1, {}]'.format(max_value)
+            }
+            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+
+    def constraints_update(self, *params):
+        if len(params) != 4:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'La cantidad de parametros ingresada no es válida. '
+                           'Ej. UPDATE x y z W'
+            }
+            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+
+        x, y, z, w = params
+        constraints = self.constraints(x)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(y)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(z)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(w)
+        if constraints:
+            return constraints
+
+    def constraints_query(self, *params):
+        if len(params) != 6:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'La cantidad de parametros ingresada no es válida. '
+                           'Ej. QUERY x1 y1 z1 x2 y2 z2'
+            }
+            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+
+        x1, x2, y1, y2, z1, z2 = params
+        constraints = self.constraints(x1, max_value=x2)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(x2)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(y1, max_value=y2)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(y2)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(z1, max_value=z2)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(z2)
+        if constraints:
+            return constraints
+
     def t(self, value):
+        constraints = self.constraints(value, max_value=50)
+        if constraints:
+            return constraints
+
         self.reset_matriz()
         data = {
             'result': False,
             'error': False,
-            'message': 'Debe realizar {} de casos de prueba'.format(value)
+            'message': 'Debe realizar {} de caso(s) de prueba'.format(value)
         }
         return Response(data=data, status=status.HTTP_200_OK)
 
     def n_m(self, value_n, value_m):
+        constraints = self.constraints(value_n, max_value=100)
+        if constraints:
+            return constraints
+
+        constraints = self.constraints(value_m, max_value=1000)
+        if constraints:
+            return constraints
+
         self.reset_matriz()
         data = {
             'result': False,
@@ -33,6 +129,10 @@ class ExecuteCommandView(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
     def process_query(self, params):
+        constrains = self.constraints_query(*params)
+        if constrains:
+            return constrains
+
         x1, y1, z1, x2, y2, z2 = params
         x_valid = Q(Q(x__gte=x1) & Q(x__lte=x2))
         y_valid = Q(Q(y__gte=y1) & Q(y__lte=y2))
@@ -49,6 +149,10 @@ class ExecuteCommandView(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
     def process_update(self, params):
+        constrains = self.constraints_update(*params)
+        if constrains:
+            return constrains
+
         x, y, z, W = params
         objs = Matriz.objects.filter(
             Q(x=x) & Q(y=y) & Q(z=z)
@@ -73,17 +177,16 @@ class ExecuteCommandView(APIView):
 
     def process_operation(self, command):
         command_type = str(command[0]).upper()
+        params = command[1:]
         if command_type == 'QUERY':
-            params = map(int, command[1:])
             return self.process_query(params)
         elif command_type == 'UPDATE':
-            params = map(int, command[1:])
             return self.process_update(params)
         else:
             data = {
                 'result': False,
                 'error': True,
-                'message': 'Error: Comando no valido',
+                'message': 'Comando no valido.',
             }
             return Response(data=data, status=status.HTTP_404_NOT_FOUND)
 
