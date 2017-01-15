@@ -91,6 +91,14 @@ class ExecuteCommandC extends Component {
                                 Execute
                             </button>
                         </div>
+
+                        {executeCommand.success &&
+                        <div className="alert alert-success alert-dismissable fade in">
+                            <p>
+                                {executeCommand.data.message}
+                            </p>
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className="row">
