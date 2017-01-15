@@ -26,7 +26,7 @@ class ExecuteCommandView(APIView):
                 'error': True,
                 'message': 'Por favor ingrese un valor entero válido.'
             }
-            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
         if value < min_value or value > max_value:
             data = {
@@ -34,7 +34,7 @@ class ExecuteCommandView(APIView):
                 'error': True,
                 'message': 'El valor ingresado no está dentro del rango válido. Rango [1, {}]'.format(max_value)
             }
-            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
     def constraints_update(self, *params):
         if len(params) != 4:
@@ -44,7 +44,7 @@ class ExecuteCommandView(APIView):
                 'message': 'La cantidad de parametros ingresada no es válida. '
                            'Ej. UPDATE x y z W'
             }
-            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
         x, y, z, w = params
         constraints = self.constraints(x)
@@ -71,9 +71,9 @@ class ExecuteCommandView(APIView):
                 'message': 'La cantidad de parametros ingresada no es válida. '
                            'Ej. QUERY x1 y1 z1 x2 y2 z2'
             }
-            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
-        x1, x2, y1, y2, z1, z2 = params
+        x1, y1, z1, x2, y2, z2 = params
         constraints = self.constraints(x1, max_value=x2)
         if constraints:
             return constraints
@@ -107,7 +107,7 @@ class ExecuteCommandView(APIView):
         data = {
             'result': False,
             'error': False,
-            'message': 'Debe realizar {} de caso(s) de prueba'.format(value)
+            'message': 'Debe realizar {} de caso(s) de prueba'.format(int(value))
         }
         return Response(data=data, status=status.HTTP_200_OK)
 
@@ -124,7 +124,7 @@ class ExecuteCommandView(APIView):
         data = {
             'result': False,
             'error': False,
-            'message': 'Ingrese las {} operaciones'.format(value_m)
+            'message': 'Ingrese las {} operaciones'.format(int(value_m))
         }
         return Response(data=data, status=status.HTTP_200_OK)
 
@@ -188,7 +188,7 @@ class ExecuteCommandView(APIView):
                 'error': True,
                 'message': 'Comando no valido.',
             }
-            return Response(data=data, status=status.HTTP_404_NOT_FOUND)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         data = request.data
