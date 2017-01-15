@@ -1,5 +1,6 @@
 import {EXECUTE_COMMAND_REQUEST, EXECUTE_COMMAND_SUCCESS, EXECUTE_COMMAND_FAILURE} from "./actions";
 import axios from "axios";
+import config from "./config";
 export const postExecuteCommandRequest = () => ({type: EXECUTE_COMMAND_REQUEST});
 export const postExecuteCommandSuccess = (data) => ({type: EXECUTE_COMMAND_SUCCESS, data});
 export const postExecuteCommandFailure = (error) => ({type: EXECUTE_COMMAND_FAILURE, error});
@@ -8,7 +9,7 @@ export const postExecuteCommandFailure = (error) => ({type: EXECUTE_COMMAND_FAIL
 export function postExecuteCommand(command) {
     return dispatch => {
         dispatch(postExecuteCommandRequest());
-        axios.post('http://localhost:8000/execute/command/', {
+        axios.post(config.url + '/execute/command/', {
             command: command
         }).then(response => {
             dispatch(postExecuteCommandSuccess(response.data));
