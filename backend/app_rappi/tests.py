@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 
-class AccountTests(APITestCase):
+class CubeSummationTests(APITestCase):
     def test_valid_for_t_command(self):
         data = {'command': '1'}
         url = reverse('execute_command')
