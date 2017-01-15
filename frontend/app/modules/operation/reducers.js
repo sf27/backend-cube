@@ -11,11 +11,9 @@ export function postExecuteCommand(command) {
         axios.post('http://localhost:8000/execute/command/', {
             command: command
         }).then(response => {
-            console.log(response);
-            dispatch(postExecuteCommandSuccess(response));
+            dispatch(postExecuteCommandSuccess(response.data));
         }).catch(error => {
-            console.log(error);
-            dispatch(postExecuteCommandFailure(error));
+            dispatch(postExecuteCommandFailure(error.response.data.message));
         });
     }
 }

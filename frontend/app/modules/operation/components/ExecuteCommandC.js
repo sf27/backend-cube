@@ -6,14 +6,17 @@ import {postExecuteCommand} from "../reducers";
 class ExecuteCommandC extends Component {
     constructor(props) {
         super(props);
+        localStorage.setItem('commands', JSON.stringify([]));
         this.state = {
             command: "",
-            commands: JSON.parse(localStorage.getItem('commands')) || []
+            commands: [],
+            results: []
         };
     }
 
     handleKeyPress = (event) => {
-        if (event.charCode == 13) {
+        let enter_key = 13;
+        if (event.charCode == enter_key) {
             this.handleSave();
         }
     };
@@ -23,7 +26,7 @@ class ExecuteCommandC extends Component {
     };
 
     onClearHistory = () => {
-        this.setState({command: "", commands: []});
+        this.setState({command: "", results: [], commands: []});
         localStorage.setItem('commands', JSON.stringify([]));
     };
 
@@ -33,7 +36,7 @@ class ExecuteCommandC extends Component {
             let commands = this.state.commands;
             commands.push(command);
             localStorage.setItem('commands', JSON.stringify(commands));
-            this.setState({command: "", commands: commands});
+            this.setState({command: "", commands});
             this.props.onPostExecuteCommand(command)
         }
     };
@@ -42,9 +45,30 @@ class ExecuteCommandC extends Component {
         this.setState({command: event.target.value});
     };
 
+    componentWillReceiveProps = (props) => {
+        if (props.executeCommand.success) {
+            if (props.executeCommand.data.result) {
+                let results = this.state.results;
+                results.push(props.executeCommand.data.value);
+                this.setState({results});
+            }
+        }
+    };
+
     render() {
+        const {executeCommand} = this.props;
         return (
             <div className="box center-xs">
+                <div className="row">
+                    <div className="col-xs-12">
+                        {executeCommand.error &&
+                        <div className="alert alert-danger alert-dismissable fade in">
+                            <a href="#" className="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Error!</strong> {executeCommand.error}
+                        </div>
+                        }
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-xs-12">
                         Ejecución de Script via WEB
@@ -69,24 +93,33 @@ class ExecuteCommandC extends Component {
                         </div>
                     </div>
                 </div>
-                <CommandListC commandList={this.state.commands}/>
+                <div className="row">
+                    <div className="col-xs-6">
+                        <h3>Comandos:</h3>
+                        <CommandListC commandList={this.state.commands}/>
+                    </div>
+                    <div className="col-xs-6">
+                        <h3>Resultados:</h3>
+                        <CommandListC commandList={this.state.results}/>
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => (
-{
-    executeCommand: state.executeCommand
-}
+    {
+        executeCommand: state.executeCommand
+    }
 );
 
 const mapDispatchToProps = dispatch => (
-{
-    onPostExecuteCommand: (command) => {
-        dispatch(postExecuteCommand(command));
+    {
+        onPostExecuteCommand: (command) => {
+            dispatch(postExecuteCommand(command));
+        }
     }
-}
 );
 
 ExecuteCommandC.propTypes = {
