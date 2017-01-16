@@ -6,8 +6,6 @@ Project used to test backend skills.
    React/Redux, Django/Django Rest Framework, Docker, Webpack, npm.
 
 
-# Reports Project
-
 ## Without Docker
 
 ### BACKEND
