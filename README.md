@@ -39,6 +39,21 @@ d) Run development server:
 
         python backend/manage.py runserver
 
+### FRONTEND
+#### Configuration
+
+1. Install the dependencies:
+
+        cd frontend ; npm install
+
+2. Run the development server
+
+        npm start
+
+3. Open the following URL:   
+   
+        [http://localhost:8080/](http://localhost:8080/)
+
 ### Tasks
 * Run tests:
 
@@ -57,21 +72,6 @@ Note: We can run all the tests and the validations with a single command:
         cd backend
         chmod +x test-all.sh
         ./test-all.sh
-
-### FRONTEND
-#### Configuration
-
-1. Install the dependencies:
-
-        cd frontend ; npm install
-
-2. Run the development server
-
-        npm start
-
-3. Open the following URL:   
-   
-        [http://localhost:8080/](http://localhost:8080/)
 
 ## With Docker
 0. Install and configure Docker
