@@ -171,7 +171,7 @@ class ExecuteCommandView(APIView):
         data = {
             'error': False,
             'result': True,
-            'message': 'Resultado de suma',
+            'message': 'Resultado de consulta',
             'value': result.get('w__sum') if result.get('w__sum') else 0
         }
         return Response(data=data, status=status.HTTP_200_OK)

@@ -37,23 +37,25 @@ c) Install the requirements:
 
 d) Run development server:
 
-        python manage.py runserver
+        python backend/manage.py runserver
 
 ### Tasks
 * Run tests:
 
-        python manage.py test
+        cd backend ; python manage.py test
 
 * Run PEP8 validations:
 
-        flake8
+        cd backend ; flake8
 
 * Verify if the imports are correctly sorted
 
-        isort -c -rc -df
+        cd backend ; isort -c -rc -df
 
 Note: We can run all the tests and the validations with a single command:
-
+        
+        cd backend
+        chmod +x test-all.sh
         ./test-all.sh
 
 ### FRONTEND
@@ -69,7 +71,7 @@ Note: We can run all the tests and the validations with a single command:
 
 3. Open the following URL:   
    
-        http://localhost:8080/ 
+        [http://localhost:8080/](http://localhost:8080/)
 
 ## With Docker
 0. Install and configure Docker
@@ -97,7 +99,7 @@ Note: We can run all the tests and the validations with a single command:
 
 5. Open the following URL:   
    
-   http://localhost:8080/ 
+   [http://localhost:8080/](http://localhost:8080/)
 
 6. Run backend tests:
    
