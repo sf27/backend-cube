@@ -19,7 +19,7 @@ class ExecuteCommandView(APIView):
 
     def constraints(self, value, min_value=1, max_value=sys.maxsize):
         try:
-            value = int(value)
+            value_int = int(value)
         except Exception:
             data = {
                 'result': False,
@@ -28,12 +28,15 @@ class ExecuteCommandView(APIView):
             }
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
-        if value < min_value or value > max_value:
+        if value_int < min_value or value_int > int(max_value):
             data = {
                 'result': False,
                 'error': True,
-                'message': 'El valor ingresado no está dentro del rango válido. Rango [1, {}]'.format(max_value)
+                'message': 'El valor ingresado no está '
+                           'dentro del rango válido. '
+                           'Rango [{}, {}]'.format(min_value, max_value)
             }
+            print(data)
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
     def constraints_update(self, *params):
@@ -74,6 +77,30 @@ class ExecuteCommandView(APIView):
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
         x1, y1, z1, x2, y2, z2 = params
+        if x1 > x2:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'El valor de x1 no puede ser mayor a x2. '
+            }
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+        if y1 > y2:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'El valor de y1 no puede ser mayor a y2. '
+            }
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+        if z1 > z2:
+            data = {
+                'result': False,
+                'error': True,
+                'message': 'El valor de z1 no puede ser mayor a z2. '
+            }
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
         constraints = self.constraints(x1, max_value=x2)
         if constraints:
             return constraints
@@ -107,7 +134,8 @@ class ExecuteCommandView(APIView):
         data = {
             'result': False,
             'error': False,
-            'message': 'Debe realizar {} de caso(s) de prueba'.format(int(value))
+            'message': 'Debe realizar {} de caso(s) '
+                       'de prueba'.format(int(value))
         }
         return Response(data=data, status=status.HTTP_200_OK)
 
@@ -153,20 +181,20 @@ class ExecuteCommandView(APIView):
         if constrains:
             return constrains
 
-        x, y, z, W = params
+        x, y, z, w = params
         objs = Matriz.objects.filter(
             Q(x=x) & Q(y=y) & Q(z=z)
         )
         if objs.exists():
             obj = objs[0]
-            obj.value = W
+            obj.value = w
             obj.save()
         else:
             Matriz.objects.create(
                 x=x,
                 y=y,
                 z=z,
-                w=W
+                w=w
             )
         data = {
             'error': False,

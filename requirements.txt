@@ -7,3 +7,5 @@ iso8601==0.1.11
 promise==0.4.2
 singledispatch==3.4.0.3
 six==1.10.0
+isort==4.2.5
+flake8==3.2.1

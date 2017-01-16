@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-
+import sys
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 
-class CubeSummationTests(APITestCase):
+class ExecuteCommandViewTests(APITestCase):
     def test_valid_for_t_command(self):
         data = {'command': '1'}
         url = reverse('execute_command')
         response = self.client.post(url, data, format='json')
         json = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(json.get('message'), u'Debe realizar {} de caso(s) de prueba'.format(
-            data.get('command')
-        ))
+        self.assertEqual(
+            json.get('message'),
+            u'Debe realizar {} de caso(s) de prueba'.format(
+                data.get('command')
+            )
+        )
 
     def test_invalid_for_t_command_zero_value(self):
         data = {'command': '0'}
@@ -21,7 +26,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 50]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. Rango [1, 50]'
+        )
 
     def test_invalid_for_t_command_wrong_value(self):
         data = {'command': 'wewew'}
@@ -45,7 +53,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 50]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. Rango [1, 50]'
+        )
 
     def test_valid_for_n_m_command(self):
         data = {'command': '2 4'}
@@ -61,7 +72,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         message = response.data.get('message')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 100]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, 100]'
+        )
 
     def test_invalid_for_n_m_command_max_value_for_m(self):
         data = {'command': '10 1001'}
@@ -69,7 +84,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         message = response.data.get('message')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 1000]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, 1000]'
+        )
 
     def test_invalid_for_n_m_command_wrong_value_for_n(self):
         data = {'command': 'e 10'}
@@ -127,7 +146,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'La cantidad de parametros ingresada no es válida. Ej. UPDATE x y z W')
+        self.assertEqual(
+            message,
+            'La cantidad de parametros ingresada no es válida. '
+            'Ej. UPDATE x y z W'
+        )
 
     def test_valid_for_update_command_no_valid_constraints_for_x(self):
         data = {'command': '2'}
@@ -145,7 +168,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, {}]'.format(sys.maxsize)
+        )
 
     def test_valid_for_update_command_no_valid_constraints_for_y(self):
         data = {'command': '2'}
@@ -163,7 +190,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, {}]'.format(sys.maxsize)
+        )
 
     def test_valid_for_update_command_no_valid_constraints_for_z(self):
         data = {'command': '2'}
@@ -181,7 +212,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, {}]'.format(sys.maxsize)
+        )
 
     def test_valid_for_query_command(self):
         data = {'command': '2'}
@@ -228,7 +263,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'La cantidad de parametros ingresada no es válida. Ej. QUERY x1 y1 z1 x2 y2 z2')
+        self.assertEqual(
+            message,
+            'La cantidad de parametros ingresada no es válida. '
+            'Ej. QUERY x1 y1 z1 x2 y2 z2'
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_x1(self):
         data = {'command': '2'}
@@ -251,7 +290,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 2]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. Rango [1, 2]'
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_x2(self):
         data = {'command': '2'}
@@ -274,7 +316,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor de x1 no puede ser mayor a x2. '
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_y1(self):
         data = {'command': '2'}
@@ -297,7 +342,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 2]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. Rango [1, 2]'
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_y2(self):
         data = {'command': '2'}
@@ -320,7 +368,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor de y1 no puede ser mayor a y2. '
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_z1(self):
         data = {'command': '2'}
@@ -343,7 +394,11 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 2]')
+        self.assertEqual(
+            message,
+            'El valor ingresado no está dentro del rango válido. '
+            'Rango [1, 2]'
+        )
 
     def test_valid_for_query_command_no_valid_constraints_for_z2(self):
         data = {'command': '2'}
@@ -366,7 +421,10 @@ class CubeSummationTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         message = response.data.get('message')
-        self.assertEqual(message, 'El valor ingresado no está dentro del rango válido. Rango [1, 9223372036854775807]')
+        self.assertEqual(
+            message,
+            'El valor de z1 no puede ser mayor a z2. '
+        )
 
     def test_valid_for_a_complete_list_of_commands(self):
         data = {'command': '2'}
