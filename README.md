@@ -61,15 +61,14 @@ d) Run development server:
 
 * Run PEP8 validations:
 
-        cd backend ; flake8
+        flake8
 
 * Verify if the imports are correctly sorted
 
-        cd backend ; isort -c -rc -df
+        isort -c -rc -df
 
 Note: We can run all the tests and the validations with a single command:
         
-        cd backend
         chmod +x test-all.sh
         ./test-all.sh
 
