@@ -1,6 +1,38 @@
 # Rappi - Test Project:
 Project used to test backend skills.
 
+Coding Challenge based in a hackerrank
+[Cube Summation](https://www.hackerrank.com/challenges/cube-summation)
+
+**Test the project:**
+
+After configure and run the project correctly.
+
+Go to this url [http://localhost:8080/](http://localhost:8080/)
+
+Use this code as input (Please insert line by line in the input box, not all at the same time):
+
+    2
+    4 5
+    UPDATE 2 2 2 4
+    QUERY 1 1 1 3 3 3
+    UPDATE 1 1 1 23
+    QUERY 2 2 2 4 4 4
+    QUERY 1 1 1 3 3 3
+    2 4
+    UPDATE 2 2 2 1
+    QUERY 1 1 1 1 1 1
+    QUERY 1 1 1 2 2 2
+    QUERY 2 2 2 2 2 2
+
+And the expected output is the following:
+    
+    4
+    4
+    27
+    0
+    1
+    1
 
 **Technologies:**  
    React/Redux, Django/Django Rest Framework, Docker, Webpack, npm.
