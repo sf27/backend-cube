@@ -31,7 +31,6 @@ class CubeSummation(object):
                            'dentro del rango válido. '
                            'Rango [{}, {}]'.format(min_value, max_value)
             }
-            print(data)
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
     def constraints_update(self, *params):

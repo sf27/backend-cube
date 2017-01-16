@@ -127,7 +127,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 4)
 
     def test_valid_for_update_command_wrong_number_of_arguments(self):
@@ -239,7 +239,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 4)
 
     def test_valid_for_query_command_wrong_number_of_arguments(self):
@@ -447,7 +447,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 4)
 
         data = {'command': 'UPDATE 1 1 1 23'}
@@ -460,7 +460,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 4)
 
         data = {'command': 'QUERY 1 1 1 3 3 3'}
@@ -468,7 +468,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 27)
 
         data = {'command': '2 4'}
@@ -486,7 +486,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 0)
 
         data = {'command': 'QUERY 1 1 1 2 2 2'}
@@ -494,7 +494,7 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 1)
 
         data = {'command': 'QUERY 2 2 2 2 2 2'}
@@ -502,5 +502,5 @@ class ExecuteCommandViewTests(APITestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json = response.json()
-        self.assertEqual(json.get('message'), u'Resultado de suma')
+        self.assertEqual(json.get('message'), u'Resultado de consulta')
         self.assertEqual(json.get('value'), 1)
