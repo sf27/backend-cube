@@ -1,7 +1,7 @@
 # Rappi - Test Project:
 Project used to test backend skills.
 
-Coding Challenge based in a hackerrank
+Coding Challenge based in a hackerrank challenge.
 [Cube Summation](https://www.hackerrank.com/challenges/cube-summation)
 
 **Test the project:**
