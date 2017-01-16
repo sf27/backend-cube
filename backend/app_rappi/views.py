@@ -7,7 +7,7 @@ from .cube_summation import CubeSummation
 
 class ExecuteCommandView(APIView):
     """
-    Execute View
+    Endpoint use to process the command and return the response
     """
 
     def __init__(self, **kwargs):
