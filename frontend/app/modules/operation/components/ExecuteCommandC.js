@@ -77,6 +77,7 @@ class ExecuteCommandC extends Component {
                             <a href="https://www.hackerrank.com/challenges/cube-summation" target="_blank">
                                 <h2>Cube Summation</h2>
                             </a>
+                            <h4><b>Nota:</b> Por favor ingrese la entrada de prueba, linea por linea. No toda al mismo tiempo.</h4>
                         </p>
                     </div>
                 </div>
